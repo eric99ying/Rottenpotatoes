@@ -8,18 +8,34 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
+    
     if params[:ratings]
-      @movies = Movie.with_ratings(params[:ratings].keys)
       @ratings_to_show = params[:ratings].keys
+      @movies = Movie.with_ratings(params[:ratings].length() == 0 ? @all_ratings : params[:ratings].keys)
+      
     else
-      @movies = Movie.all
-      @ratings_to_show = Array.new
+      if session[:ratings] and not params[:from_button]
+        @movies = Movie.with_ratings(session[:ratings].length() == 0 ? @all_ratings : session[:ratings])
+        @ratings_to_show = session[:ratings]
+      else
+        @movies = Movie.all
+        @ratings_to_show = Array.new
+      end
     end
     
     if params[:sort]
       @movies = Movie.sort_col(@movies, params[:sort])
       @highlight = params[:sort]
+    else
+      if session[:sort]
+        @movies = Movie.sort_col(@movies, session[:sort])
+        @highlight = session[:sort]
+      end
     end
+    
+    session[:ratings] = @ratings_to_show
+    session[:sort] = @highlight
+    
   end
 
   def new
