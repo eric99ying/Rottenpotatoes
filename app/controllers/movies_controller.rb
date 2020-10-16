@@ -18,6 +18,7 @@ class MoviesController < ApplicationController
     
     if params[:sort]
       @movies = Movie.sort_col(@movies, params[:sort])
+      @highlight = params[:sort]
     end
   end
 
