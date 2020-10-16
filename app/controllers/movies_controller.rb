@@ -15,6 +15,10 @@ class MoviesController < ApplicationController
       @movies = Movie.all
       @ratings_to_show = Array.new
     end
+    
+    if params[:sort]
+      @movies = Movie.sort_col(@movies, params[:sort])
+    end
   end
 
   def new
