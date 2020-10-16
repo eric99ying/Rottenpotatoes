@@ -11,15 +11,15 @@ class MoviesController < ApplicationController
     
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
-      @movies = Movie.with_ratings(params[:ratings].length() == 0 ? @all_ratings : params[:ratings].keys)
+      @movies = Movie.with_ratings(params[:ratings].keys)
       
     else
       if session[:ratings] and not params[:from_button]
-        @movies = Movie.with_ratings(session[:ratings].length() == 0 ? @all_ratings : session[:ratings])
+        @movies = Movie.with_ratings(session[:ratings])
         @ratings_to_show = session[:ratings]
       else
         @movies = Movie.all
-        @ratings_to_show = Array.new
+        @ratings_to_show = @all_ratings
       end
     end
     
