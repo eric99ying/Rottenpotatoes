@@ -18,7 +18,6 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      
       <% class_title = (@highlight == "title" ? "hilite bg-warning" : "") %>
       <% class_release = (@highlight == "release" ? "hilite bg-warning" : "") %>
 
@@ -42,9 +41,7 @@
         <td>
           <%= movie.title %>
         </td>
-        <td>
-          <%= movie.rating %>
-        </td>
+        <td><%= movie.rating %></td>
         <td>
           <%= movie.release_date %>
         </td>
